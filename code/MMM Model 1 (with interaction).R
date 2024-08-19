@@ -7,7 +7,7 @@ packageVersion("Robyn")
 # Load the readxl package
 library(readxl)
 setwd("C:/Users/DeepakArun/Desktop/TWC/Robyn")
-data <- readcsv("C:/Users/DeepakArun/Desktop/Data/MMM_Model1_interaction_inputs.csv")
+data <- read.csv("C:/Users/DeepakArun/Desktop/Data/MMM_Model1_interaction_inputs.csv")
 robyn_directory <- "~/Desktop"
 
 
