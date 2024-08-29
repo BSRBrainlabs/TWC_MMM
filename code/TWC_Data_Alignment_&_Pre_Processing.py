@@ -12,6 +12,7 @@ warnings.filterwarnings('ignore')
 def visits_product(file_path):
     df_v1 = pd.read_excel(file_path+"US All Product (Web-App) Visits 2021-10.17.23 - REVISED 1.4.24.xlsx")
     df_v2 = pd.read_excel(file_path+"US All Product (Web-App) Visits 10.1.23-12.31.23.xlsx")
+    
     df_v1['Date'] = pd.to_datetime(df_v1['Date'])
     df_v2['Date'] = pd.to_datetime(df_v2['Date'])
     df_v1 = df_v1[df_v1['Date']<'2023-10-01']
@@ -150,9 +151,21 @@ def seo_clicks(file_path):
     df_ = seo_get_combined_column(df_)
     return df_
 
+
 # Pricing/App Installs (Android and iOS)
+
+def android_installs_preparation(file_path, sheet_name, output_file_path):
+    file_path = 'BL_TWC _ Marketing Spend Data.xlsx' 
+    sheet_name = 'AF_installs_AND_TWC'
+    df = pd.read_excel(file_path, sheet_name=sheet_name)
+    df['Date'] =  pd.to_datetime(df['Date']).dt.strftime('%Y-%m-%d')
+    grouped_df = df.groupby(['Media Source', 'Date'])['Installs'].sum().reset_index()
+    grouped_df.sort_values(by=['Date', 'Media Source'], inplace=True)
+    grouped_df.to_excel("Android Overview Dash Table Exported.xlsx", index=False)
+
+
 def pricing_android(file_path):
-    df_v1 = pd.read_excel(file_path+"9.1.21_9.30.23 _ Android Overview Dash Table Exported.xlsx")
+    df_v1 = pd.read_excel(file_path+"Android Overview Dash Table Exported.xlsx")
     df_v1['Date'] = pd.to_datetime(df_v1['Date']).dt.strftime('%Y-%m-%d')
     df_v1['Installs'] = df_v1['Installs'].astype(float)
     df_v2 = pd.read_csv(file_path+"TWC _ Android Q4 2023 Installs.csv")
@@ -163,8 +176,17 @@ def pricing_android(file_path):
     df_['Date'] = pd.to_datetime(df_['Date'])
     return df_
 
+def iOS_installs_preparation(file_path, sheet_name, output_file_path):
+    file_path = 'BL_TWC _ Marketing Spend Data.xlsx' 
+    sheet_name = 'AF_installs_IOS_TWC'
+    df = pd.read_excel(file_path, sheet_name=sheet_name)
+    df['Date'] =  pd.to_datetime(df['Date']).dt.strftime('%Y-%m-%d')
+    grouped_df = df.groupby(['Media Source', 'Date'])['Installs'].sum().reset_index()
+    grouped_df.sort_values(by=['Date', 'Media Source'], inplace=True)
+    grouped_df.to_excel("iOS Overview Dash Table Exported.xlsx", index=False)
+
 def pricing_iOS(file_path):
-    df_v1 = pd.read_excel(file_path+"9.1.21_9.30.23 _ iOS Overview Dash Table Exported.xlsx")
+    df_v1 = pd.read_excel(file_path+"iOS Overview Dash Table Exported.xlsx")
     df_v1['Date'] = pd.to_datetime(df_v1['Date']).dt.strftime('%Y-%m-%d')
     df_v1['Installs'] = df_v1['Installs'].astype(float)
     df_v2 = pd.read_csv(file_path+"TWC _ iOS Q4 2023 Installs.csv")
@@ -185,6 +207,7 @@ def pricing_aggregate(file_path):
     df_ = pd.merge(df_android, df_iOS, on='Date', how='outer').reset_index()
     df_['Total_Installs'] = df_['Android_Installs'] + df_['iOS_Installs']
     return df_
+
 
 # User Acquisition - Media Spend, Impression and Clicks
 def mkt_media_spend_pre_processing(df_, paid_media_sheet):
@@ -315,7 +338,7 @@ def get_model_brand_media_spend_impression(file_path):
     df_result = pd.merge(df_result, df_grp, on='Date', how='outer')
     return df_result
 
-# Brand Health Measures
+# Brand Health Measures 
 def get_brand_health_measures(file_path):
     df_ = pd.read_csv(file_path+"Brand health measures 2021 - 2023.csv")
     df_.set_index('Measure', inplace=True)
@@ -336,6 +359,7 @@ def get_model_brand_health_measures(file_path):
     df_qtr = df_qtr.append({'Date':'2021-Q2'}, ignore_index=True)
     df_qtr = df_qtr.append({'Date':'2023-Q4'}, ignore_index=True)
     df_qtr = df_qtr.append({'Date':'2024-Q1'}, ignore_index=True)
+    df_qtr = df_qtr.append({'Date':'2024-Q2'}, ignore_index=True)
     df_qtr =  get_year_qtr(df_qtr)
     df_qtr = df_qtr.sort_values(['Year', 'Quarter'])
     df_qtr['Date_New'] = pd.to_datetime(df_qtr['Year'].astype(str) + 'Q' + df_qtr['Quarter'].astype(str))
@@ -347,7 +371,7 @@ def get_model_brand_health_measures(file_path):
     df_['Date'] = pd.to_datetime(df_['Date'])
     return df_
 
-# Social Engagement
+# Social Engagement 
 def social_engagemnet_pre_processing_khoros(file_path):
     df_ = pd.read_excel(file_path+"Social Engagements-2020-2023_Revised.xlsx", sheet_name='2020 - 2023 Oct 25th')
     df_=df_[df_['Outbound Post']!='Outbound Post']
@@ -405,7 +429,7 @@ def get_model_social_engagemnet(file_path):
         df_result = pd.merge(df_result, df_grp, on='Date', how='outer')
     return df_result
 
-# Marketing Events
+# Marketing Events 
 def get_model_mkt_events(file_path, ads_date_range):
     df_ = pd.read_csv(file_path + "CampaignVendor_Events.csv")
     
@@ -475,6 +499,14 @@ def get_model_critical_events(file_path, ads_date_range):
     df_event['Event_Name'] = df_event['Event_Name'].fillna(pd.NA)
     
     return df_event
+
+# Influencer Data
+def get_model_influencer_data(file_path):
+    df_v1 = pd.read_excel(file_path+"Influencer_Data.xlsx", sheet_name='Data')
+    df_ = df_v1
+    #df_ = pd.concat([df_v1, df_v2])
+    df_['Date'] = pd.to_datetime(df_['Date'])
+    return df_    
 
 def get_model_data(file_path):
 
@@ -590,5 +622,15 @@ def get_model_data(file_path):
 
     df_ads = df_ads[(df_ads['Date']>='2021-09-01') & (df_ads['Date']<='2023-12-31')]
     print("ADS", df_ads.shape, df_ads['Date'].min().strftime("%d-%m-%Y"), df_ads['Date'].max().strftime("%d-%m-%Y"), df_ads['Date'].max() - df_ads['Date'].min())
+
+    # Influencer Data
+    df_model_influencer_data = get_model_influencer_data(file_path)
+    print("Influencer Data", df_model_influencer_data.shape, df_model_influencer_data['Date'].min().strftime("%d-%m-%Y"), df_model_influencer_data['Date'].max().strftime("%d-%m-%Y"), df_model_influencer_data['Date'].max() - df_model_influencer_data['Date'].min())
+    df_ads = pd.merge(df_ads,
+                      df_model_influencer_data,
+                      on = 'Date',
+                      how = 'outer')
+    print("ADS", df_ads.shape, df_ads['Date'].min().strftime("%d-%m-%Y"), df_ads['Date'].max().strftime("%d-%m-%Y"), df_ads['Date'].max() - df_ads['Date'].min())
+        
 
     return df_ads
