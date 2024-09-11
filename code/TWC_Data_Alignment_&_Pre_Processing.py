@@ -653,3 +653,115 @@ def get_model_data(file_path):
         
 
     return df_final_data
+
+
+
+## Preprocessing after Data Alignment
+def health_measure_pre_processing(df_):
+
+    hm_back_fill_var = ['Positive impact on community', 'Positive impact on well being']
+    hm_forward_fill_var = ['Net Favorability', 'Likelihood to recommend', 'Net Trust', 'Realibality', 'Accuracy', 'NPS', 'Usage', 'Preference', 'Seen as experts', 'Positive impact on community', 'Positive impact on well being']
+    df_[hm_back_fill_var] = df_[hm_back_fill_var].fillna(method='bfill')
+    df_[hm_forward_fill_var] = df_[hm_forward_fill_var].fillna(method='ffill')
+    
+    return df_
+
+def organic_search_pre_processing(df_):
+
+    df_['Date'] = pd.to_datetime(df_['Date'])
+    consisten_CTR_for_imputation = round((df_[df_['OrganicSearch_Google_Clicks'].notna()]['OrganicSearch_Google_Clicks'].sum())/(df_[df_['OrganicSearch_Google_Impressions'].notna()]['OrganicSearch_Google_Impressions'].sum()),4)
+    df_.loc[df_['OrganicSearch_Google_Clicks'].isna(), 'OrganicSearch_Google_Clicks'] = df_.loc[df_['OrganicSearch_Google_Clicks'].isna(), 'SEO_Clicks_OrganicSearch_Desktop_MobileWeb(Combined)']
+    df_['OrganicSearch_Google_Impressions'] = np.where(df_['OrganicSearch_Google_Impressions'].isna(), round(df_['OrganicSearch_Google_Clicks']/consisten_CTR_for_imputation), df_['OrganicSearch_Google_Impressions'])
+    df_['OrganicSearch_Google_Position'] = np.where(df_['OrganicSearch_Google_Position'].isna(), np.median(df_[df_['OrganicSearch_Google_Position'].notna()]['OrganicSearch_Google_Position']), df_['OrganicSearch_Google_Position'])
+
+    return df_
+
+#def social_media_pre_processing(df_):
+
+ #   df_['Date'] = pd.to_datetime(df_['Date'])
+ #   df_['SocialEng_LinkedIn_Impressions'] = np.where(((df_['Date']>='2023-04-01') & (df_['SocialEng_LinkedIn_Impressions'].isna())), np.mean(df_[df_['SocialEng_LinkedIn_Impressions'].notna()]['SocialEng_LinkedIn_Impressions']), df_['SocialEng_LinkedIn_Impressions'])
+ #   df_['SocialEng_LinkedIn_Total_Engagements'] = np.where(((df_['Date']>='2023-04-01') & (df_['SocialEng_LinkedIn_Total_Engagements'].isna())), np.mean(df_[df_['SocialEng_LinkedIn_Total_Engagements'].notna()]['SocialEng_LinkedIn_Total_Engagements']), df_['SocialEng_LinkedIn_Total_Engagements'])
+ #   df_['SocialEng_LinkedIn_Estimated_Clicks'] = np.where(((df_['Date']>='2023-04-01') & (df_['SocialEng_LinkedIn_Estimated_Clicks'].isna())), np.mean(df_[df_['SocialEng_LinkedIn_Estimated_Clicks'].notna()]['SocialEng_LinkedIn_Estimated_Clicks']), df_['SocialEng_LinkedIn_Estimated_Clicks'])
+ #   return df_
+
+def social_media_pre_processing(df_):
+
+    df_['Date'] = pd.to_datetime(df_['Date'])
+    
+
+    start_date = pd.to_datetime('2021-09-01')
+    end_date = pd.to_datetime('2023-12-31')
+    
+
+    date_mask = (df_['Date'] >= start_date) & (df_['Date'] <= end_date)
+
+
+    mean_impressions = df_[date_mask & df_['SocialEng_LinkedIn_Impressions'].notna()]['SocialEng_LinkedIn_Impressions'].mean()
+    mean_total_engagements = df_[date_mask & df_['SocialEng_LinkedIn_Total_Engagements'].notna()]['SocialEng_LinkedIn_Total_Engagements'].mean()
+    mean_estimated_clicks = df_[date_mask & df_['SocialEng_LinkedIn_Estimated_Clicks'].notna()]['SocialEng_LinkedIn_Estimated_Clicks'].mean()
+    
+
+    impute_start_date = pd.to_datetime('2023-04-01')
+    impute_end_date = pd.to_datetime('2023-12-31')
+
+ 
+    impute_mask = (df_['Date'] >= impute_start_date) & (df_['Date'] <= impute_end_date)
+    
+
+    df_['SocialEng_LinkedIn_Impressions'] = np.where(impute_mask & df_['SocialEng_LinkedIn_Impressions'].isna(), 
+                                                     mean_impressions, 
+                                                     df_['SocialEng_LinkedIn_Impressions'])
+    
+    df_['SocialEng_LinkedIn_Total_Engagements'] = np.where(impute_mask & df_['SocialEng_LinkedIn_Total_Engagements'].isna(), 
+                                                           mean_total_engagements, 
+                                                           df_['SocialEng_LinkedIn_Total_Engagements'])
+    
+    df_['SocialEng_LinkedIn_Estimated_Clicks'] = np.where(impute_mask & df_['SocialEng_LinkedIn_Estimated_Clicks'].isna(), 
+                                                          mean_estimated_clicks, 
+                                                          df_['SocialEng_LinkedIn_Estimated_Clicks'])
+    
+    return df_
+
+
+def drop_epmty_feilds(df_):
+
+    cols_v1 = list(df_.columns[df_.isna().sum()==df_.shape[0]])
+    column_sums = df_.sum()
+    cols_v2 = column_sums[column_sums == 0].index.tolist()
+    cols = list(set(cols_v1 + cols_v2))
+    if cols:
+        df_ = df_.drop(cols, axis=1)
+        print('Columns dropped due to null/zero feilds:', cols)
+
+    return df_
+
+def drop_unnecessary_columns(df_):
+
+    date_var = ['Year', 'Quarter']
+    print("Dropping CTR and SEO clicks as organic search imputation is complete")
+    print("Dropping Partner Visits data as Platform level vists will be considered")
+    print("Dropping Platform/Product visits as overall vists are considered, being the target variable")
+    print("Dropping Overall/Platform/Product *Goal* visits, the variable is the total goal vists for that date; data is sparse")
+    organic_search_var = ['OrganicSearch_Google_CTR', 'SEO_Clicks_OrganicSearch_Desktop_MobileWeb(Combined)']
+    partner_vists_var = ['Partner_Visits_Overall_(Desktop&Mobile)']
+    platform_vists_var = ['Apps_TWC Universal Android 4G+_Visits','Apps_TWC Universal iOS 4G+_Visits','MobileWeb_TWC Mobile Web_Visits','Web_TWC Web_Visits']
+    goal_vists_var = ['Apps_TWC Universal Android 4G+_Goal','Apps_TWC Universal iOS 4G+_Goal', 'MobileWeb_TWC Mobile Web_Goal', 'Web_TWC Web_Goal', 'Overall_Product_Goal']
+    drop_var = date_var + organic_search_var + partner_vists_var + platform_vists_var + goal_vists_var
+    df_ = df_.drop(drop_var, axis=1)
+
+    return df_
+
+def perform_ADS_pre_processing(df_):
+
+    print('***** Brand Health - Imputation *****')
+    df_ = health_measure_pre_processing(df_)
+    print('***** Organic Search - Imputation *****')
+    df_ = organic_search_pre_processing(df_)
+    print('***** Social Media - LinkedIn - Imputation *****')
+    df = social_media_pre_processing(df_)
+    print('***** Checking variables which does not have any data *****')
+    df_ = drop_epmty_feilds(df_)
+    print('***** Dropping unnecessary columns *****')
+    df_ = drop_unnecessary_columns(df_)
+
+    return df_
