@@ -7,7 +7,8 @@ packageVersion("Robyn")
 # Load the readxl package
 library(readxl)
 setwd("C:/Users/DeepakArun/Desktop/TWC/Robyn")
-data <- read_excel("C:/Users/DeepakArun/Desktop/Data/Model1_iteraction_input.xlsx")
+
+data <- read_excel("C:/Users/DeepakArun/Desktop/Data/Model1_iteraction_input.xlsx") #Replace it with your file
 
 robyn_directory <- "~/Desktop"
 
@@ -104,8 +105,7 @@ InputCollect <- robyn_inputs(
                         'Twitter_TikTok_Combined_Spend',
                         'Brand_Spend',
                         'Influencer_Spend'),
-  paid_media_vars = c(
-                      'SEM_Google_Spend',
+  paid_media_vars = c('SEM_Google_Spend',
                       'Preload_IronSource_Aura_Spend',
                       'Programmatic_Bidease_Spend',
                       'Preload_Digital_Turbine_Spend',
@@ -116,7 +116,21 @@ InputCollect <- robyn_inputs(
                       'Programmatic_Persona.ly_Spend',
                       'Twitter_TikTok_Combined_Spend',
                       'Brand_Spend',
-                      'Influencer_Spend'
+                      'Influencer_Spend',
+                      #'SEM_Google_Impressions',
+                      #'Preload_IronSource_Aura_impressions',
+                      #'Programmatic_Bidease_Spend',
+                      #'Preload_Digital_Turbine_launches',
+                      #'Programmatic_Tapjoy_Clicks',
+                      #'SEM_Apple_Search_Ads_Impressions',
+                      #'Programmatic_LiftOff_Impressions',
+                      #'Programmatic_IronSource_Sonic_Impressions',
+                      #'Programmatic_Persona.ly_Clicks',
+                      #'Twitter_TikTok_Combined_Impressions',
+                      #'Influencer_Daily_Impressions',
+                      #'Brand_Impressions'
+                      
+                      
   ), # mandatory.
   # paid_media_vars must have same order as paid_media_spends. Use media exposure metrics like
   # impressions, GRP etc. If not applicable, use spend instead.
