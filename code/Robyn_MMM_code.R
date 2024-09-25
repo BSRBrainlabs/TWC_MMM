@@ -28,6 +28,361 @@ head(dt_prophet_holidays)
 
 names(data) <- gsub(" ", "_", names(data))
 
+# Uncomment the necessary line to provide the inputs to the model based on the target variable  
+
+###################### INPUT FOR MODEL 1 WITHOUT INTERACTION (OVERALL WEB VISITS AS TARGET) ####################################
+# context_vars = c('Preference',
+#                  'US_Weather_Impact_Rating',
+#                  'Net_Trust',
+#                  'NPS',
+#                  'OrganicSearch_Google_Position',
+#                  'EventsCamp.Vend_Campaign_Flag',
+#                  'Visits_Critical_Event_Flag'
+# )
+# paid_media_spends = c('SEM_Google_Spend',
+#                       'Preload_IronSource_Aura_Spend',
+#                       'Programmatic_Bidease_Spend',
+#                       'Preload_Digital_Turbine_Spend',
+#                       'Programmatic_Tapjoy_Spend',
+#                       'SEM_Apple_Search_Ads_Spend',
+#                       'Programmatic_LiftOff_Spend',
+#                       'Programmatic_IronSource_Sonic_Spend',
+#                       'Programmatic_Persona.ly_Spend',
+#                       'Twitter_TikTok_Combined_Spend',
+#                       'Brand_Spend',
+#                       'Influencer_Spend')
+
+# paid_media_vars = c('SEM_Google_Impressions',
+#                     'Preload_IronSource_Aura_impressions',
+#                     'Programmatic_Bidease_Spend',
+#                     'Preload_Digital_Turbine_launches',
+#                     'Programmatic_Tapjoy_Clicks',
+#                     'SEM_Apple_Search_Ads_Impressions',
+#                     'Programmatic_LiftOff_Impressions',
+#                     'Programmatic_IronSource_Sonic_Impressions',
+#                     'Programmatic_Persona.ly_Clicks',
+#                     'Twitter_TikTok_Combined_Impressions',
+#                     'Influencer_Daily_Impressions',
+#                     #'Brand_Spend'),
+#                     'Brand_Impressions')
+
+# organic_vars = c('OrganicSearch_Google_Clicks',
+#                  'SocialEng_Twitter_Total_Engagements',
+#                  'SocialEng_Facebook_Estimated_Clicks',
+#                  'SocialEng_LinkedIn_Impressions',
+#                  'SocialEng_TikTok_Impressions',
+#                  'SocialEng_YouTube_Estimated_Clicks',
+#                  'SocialEng_Instagram_Estimated_Clicks'
+
+# )
+
+
+###################### INPUT FOR MODEL 1 WITH INTERACTION & WITHOUT FLAG (OVERALL WEB VISITS AS TARGET) ####################################
+
+# context_vars = c('Preference',
+#                  'US_Weather_Impact_Rating',
+#                  'Net_Trust',
+#                  'NPS',
+#                  'OrganicSearch_Google_Position',
+#                  #'EventsCamp.Vend_Campaign_Flag',
+#                  #'Visits_Critical_Event_Flag',
+#                  'OrganicSearch_Google_Clicks_Paid_Spend',
+#                  'SocialEng_Facebook_Estimated_Clicks_Paid_Spend',
+#                  'SocialEng_YouTube_Estimated_Clicks_Paid_Spend',
+#                  'SocialEng_Instagram_Estimated_Clicks_Paid_Spend',
+#                  'SocialEng_Twitter_Total_Engagements_Paid_Spend',
+#                  'SocialEng_LinkedIn_Impressions_Paid_Spend',
+#                  'SocialEng_TikTok_Impressions_Paid_Spend',
+#                  'Preference_Paid_Spend',
+#                  'Net_Trust_Paid_Spend', 
+#                  'NPS_Paid_Spend'
+# )
+# paid_media_spends = c('SEM_Google_Spend',
+#                       'Preload_IronSource_Aura_Spend',
+#                       'Programmatic_Bidease_Spend',
+#                       'Preload_Digital_Turbine_Spend',
+#                       'Programmatic_Tapjoy_Spend',
+#                       'SEM_Apple_Search_Ads_Spend',
+#                       'Programmatic_LiftOff_Spend',
+#                       'Programmatic_IronSource_Sonic_Spend',
+#                       'Programmatic_Persona.ly_Spend',
+#                       'Twitter_TikTok_Combined_Spend',
+#                       'Brand_Spend',
+#                       'Influencer_Spend')
+
+# paid_media_vars = c('SEM_Google_Impressions',
+#                     'Preload_IronSource_Aura_impressions',
+#                     'Programmatic_Bidease_Clicks',
+#                     'Preload_Digital_Turbine_launches',
+#                     'Programmatic_Tapjoy_Clicks',
+#                     'SEM_Apple_Search_Ads_Impressions',
+#                     'Programmatic_LiftOff_Impressions',
+#                     'Programmatic_IronSource_Sonic_Impressions',
+#                     'Programmatic_Persona.ly_Clicks',
+#                     'Twitter_TikTok_Combined_Impressions',
+#                     'Brand_Impressions',
+#                     'Influencer_Daily_Impressions')
+
+# organic_vars = c('OrganicSearch_Google_Clicks',
+#                  'SocialEng_Twitter_Total_Engagements',
+#                  'SocialEng_Facebook_Estimated_Clicks',
+#                  'SocialEng_LinkedIn_Impressions',
+#                  'SocialEng_TikTok_Impressions',
+#                  'SocialEng_YouTube_Estimated_Clicks',
+#                  'SocialEng_Instagram_Estimated_Clicks'
+
+# )
+
+
+###################### INPUT FOR MODEL 2 WITHOUT INTERACTION (TOTAL APP INSTALLS AS TARGET) ####################################
+
+# context_vars = c('Preference',
+#                  'US_Weather_Impact_Rating',
+#                  'Net_Trust',
+#                  'NPS',
+#                  'OrganicSearch_Google_Position',
+#                  'EventsCamp.Vend_Campaign_Flag',
+#                  'Installs_Critical_Event_Flag'
+# )
+# paid_media_spends = c('SEM_Google_Spend',
+#                       'Preload_IronSource_Aura_Spend',
+#                       'Programmatic_Bidease_Spend',
+#                       'Preload_Digital_Turbine_Spend',
+#                       'Programmatic_Tapjoy_Spend',
+#                       'SEM_Apple_Search_Ads_Spend',
+#                       'Programmatic_LiftOff_Spend',
+#                       'Programmatic_IronSource_Sonic_Spend',
+#                       'Programmatic_Persona.ly_Spend',
+#                       'Twitter_TikTok_Combined_Spend',
+#                       'Brand_Spend',
+#                       'Influencer_Spend')
+
+# paid_media_vars = c('SEM_Google_Impressions',
+#                     'Preload_IronSource_Aura_impressions',
+#                     'Programmatic_Bidease_Clicks',
+#                     'Preload_Digital_Turbine_launches',
+#                     'Programmatic_Tapjoy_Clicks',
+#                     'SEM_Apple_Search_Ads_Impressions',
+#                     'Programmatic_LiftOff_Impressions',
+#                     'Programmatic_IronSource_Sonic_Impressions',
+#                     'Programmatic_Persona.ly_Clicks',
+#                     'Twitter_TikTok_Combined_Impressions',
+#                     'Influencer_Daily_Impressions',
+#                     'Brand_Impressions')
+
+# organic_vars = c('OrganicSearch_Google_Clicks',
+#                  'SocialEng_YouTube_Impressions',
+#                  'SocialEng_Twitter_Total_Engagements',
+#                  'SocialEng_Facebook_Estimated_Clicks',
+#                  'SocialEng_Instagram_Impressions',
+#                  'SocialEng_LinkedIn_Total_Engagements',
+#                  'SocialEng_TikTok_Total_Engagements'
+
+# )
+
+###################### INPUT FOR MODEL 2 WITH INTERACTION & WITHOUT FLAG (TOTAL APP INSTALLS AS TARGET) ####################################
+
+# context_vars = c('Preference',
+#                  'US_Weather_Impact_Rating',
+#                  'Net_Trust',
+#                  'NPS',
+#                  'OrganicSearch_Google_Position',
+#                  #'EventsCamp.Vend_Campaign_Flag',
+#                  #'Installs_Critical_Event_Flag',
+#                  'OrganicSearch_Google_Clicks_Paid_Spend',
+#                  'SocialEng_YouTube_Impressions_Paid_Spend',
+#                  'SocialEng_Twitter_Total_Engagements_Paid_Spend',
+#                  'SocialEng_Facebook_Estimated_Clicks_Paid_Spend',
+#                  'SocialEng_Instagram_Impressions_Paid_Spend',
+#                  'SocialEng_LinkedIn_Total_Engagements_Paid_Spend',
+#                  'SocialEng_TikTok_Total_Engagements_Paid_Spend',
+#                  'Preference_Paid_Spend',
+#                  'Net_Trust_Paid_Spend', 
+#                  'NPS_Paid_Spend'
+# )
+
+# paid_media_spends = c('SEM_Google_Spend',
+#                       'Preload_IronSource_Aura_Spend',
+#                       'Programmatic_Bidease_Spend',
+#                       'Preload_Digital_Turbine_Spend',
+#                       'Programmatic_Tapjoy_Spend',
+#                       'SEM_Apple_Search_Ads_Spend',
+#                       'Programmatic_LiftOff_Spend',
+#                       'Programmatic_IronSource_Sonic_Spend',
+#                       'Programmatic_Persona.ly_Spend',
+#                       'Twitter_TikTok_Combined_Spend',
+#                       'Brand_Spend',
+#                       'Influencer_Spend')
+
+# paid_media_vars = c('SEM_Google_Impressions',
+#                     'Preload_IronSource_Aura_impressions',
+#                     'Programmatic_Bidease_Clicks',
+#                     'Preload_Digital_Turbine_launches',
+#                     'Programmatic_Tapjoy_Clicks',
+#                     'SEM_Apple_Search_Ads_Impressions',
+#                     'Programmatic_LiftOff_Impressions',
+#                     'Programmatic_IronSource_Sonic_Impressions',
+#                     'Programmatic_Persona.ly_Clicks',
+#                     'Twitter_TikTok_Combined_Impressions',
+#                     'Influencer_Daily_Impressions',
+#                     'Brand_Impressions')
+
+# organic_vars = c('OrganicSearch_Google_Clicks',
+#                  'SocialEng_Twitter_Total_Engagements',
+#                  'SocialEng_Facebook_Estimated_Clicks',
+#                  'SocialEng_LinkedIn_Total_Engagements',
+#                  'SocialEng_TikTok_Total_Engagements',
+#                  'SocialEng_Instagram_Impressions',
+#                  'SocialEng_YouTube_Impressions')
+
+# ###################### INPUT FOR MODEL 3 ITERATION 1 (OVERALL VISITS AS TARGET) ####################################
+
+# context_vars = c('Preference',
+#                  'US_Weather_Impact_Rating',
+#                  'Net_Trust_lag181d',
+#                  'NPS'
+# )
+# paid_media_spends = c('SEM_Google_Spend',
+#                       'Preload_IronSource_Aura_Spend',
+#                       'Programmatic_Bidease_Spend',
+#                       'Preload_Digital_Turbine_Spend',
+#                       'Programmatic_Tapjoy_Spend',
+#                       'SEM_Apple_Search_Ads_Spend',
+#                       'Programmatic_LiftOff_Spend',
+#                       'Programmatic_IronSource_Sonic_Spend',
+#                       'Programmatic_Persona.ly_Spend',
+#                       'Twitter_TikTok_Combined_Spend',
+#                       'Brand_Spend',
+#                       'Influencer_Spend')
+
+# paid_media_vars = c('SEM_Google_Spend',
+#                     'Preload_IronSource_Aura_Spend',
+#                     'Programmatic_Bidease_Spend',
+#                     'Preload_Digital_Turbine_Spend',
+#                     'Programmatic_Tapjoy_Spend',
+#                     'SEM_Apple_Search_Ads_Spend',
+#                     'Programmatic_LiftOff_Spend',
+#                     'Programmatic_IronSource_Sonic_Spend',
+#                     'Programmatic_Persona.ly_Spend',
+#                     'Twitter_TikTok_Combined_Spend',
+#                     'Brand_Spend',
+#                     'Influencer_Spend')
+
+# organic_vars = c('OrganicSearch_Google_Clicks',
+#                  'SocialEng_Twitter_Total_Engagements',
+#                  'SocialEng_Facebook_Total_Engagements',
+#                  'SocialEng_LinkedIn_Total_Engagements',
+#                  'SocialEng_TikTok_Total_Engagements',
+#                  'SocialEng_YouTube_Total_Engagements',
+#                  'SocialEng_Instagram_Total_Engagements'
+# )
+
+# ###################### INPUT FOR MODEL 3 ITERATION 2 (OVERALL VISITS AS TARGET) ####################################
+
+# context_vars = c('Preference',
+#                  'US_Weather_Impact_Rating',
+#                  'Net_Trust_lag181d',
+#                  'NPS',
+#                  'OrganicSearch_Google_Clicks_Paid_Spend',
+#                  'SocialEng_Facebook_Total_Engagements_Paid_Spend',
+#                  'SocialEng_YouTube_Total_Engagements_Paid_Spend',
+#                  'SocialEng_Instagram_Total_Engagements_Paid_Spend',
+#                  'SocialEng_Twitter_Total_Engagements_Paid_Spend',
+#                  'SocialEng_LinkedIn_Total_Engagements_Paid_Spend',
+#                  'SocialEng_TikTok_Total_Engagements_Paid_Spend',
+#                  'Preference_Paid_Spend',
+#                  'Net_Trust_lag181d_Paid_Spend', 
+#                  'NPS_Paid_Spend'
+# )
+
+# paid_media_spends = c('SEM_Google_Spend',
+#                       'Preload_IronSource_Aura_Spend',
+#                       'Programmatic_Bidease_Spend',
+#                       'Preload_Digital_Turbine_Spend',
+#                       'Programmatic_Tapjoy_Spend',
+#                       'SEM_Apple_Search_Ads_Spend',
+#                       'Programmatic_LiftOff_Spend',
+#                       'Programmatic_IronSource_Sonic_Spend',
+#                       'Programmatic_Persona.ly_Spend',
+#                       'Twitter_TikTok_Combined_Spend',
+#                       'Brand_Spend',
+#                       'Influencer_Spend')
+
+# paid_media_vars = c('SEM_Google_Spend',
+#                     'Preload_IronSource_Aura_Spend',
+#                     'Programmatic_Bidease_Spend',
+#                     'Preload_Digital_Turbine_Spend',
+#                     'Programmatic_Tapjoy_Spend',
+#                     'SEM_Apple_Search_Ads_Spend',
+#                     'Programmatic_LiftOff_Spend',
+#                     'Programmatic_IronSource_Sonic_Spend',
+#                     'Programmatic_Persona.ly_Spend',
+#                     'Twitter_TikTok_Combined_Spend',
+#                     'Brand_Spend',
+#                     'Influencer_Spend')
+
+# organic_vars = c('OrganicSearch_Google_Clicks',
+#                  'SocialEng_Twitter_Total_Engagements',
+#                  'SocialEng_Facebook_Total_Engagements',
+#                  'SocialEng_LinkedIn_Total_Engagements',
+#                  'SocialEng_TikTok_Total_Engagements',
+#                  'SocialEng_YouTube_Total_Engagements',
+#                  'SocialEng_Instagram_Total_Engagements'
+# )
+
+# ###################### INPUT FOR MODEL 3 ITERATION 3 (OVERALL VISITS AS TARGET) ####################################
+
+# context_vars = c('Preference',
+#                  'US_Weather_Impact_Rating',
+#                  'Net_Trust_lag181d',
+#                  'NPS',
+#                  'OrganicSearch_Google_Clicks_Paid_Spend',
+#                  'SocialEng_Facebook_Total_Engagements_Paid_Spend',
+#                  'SocialEng_YouTube_Total_Engagements_Paid_Spend',
+#                  'SocialEng_Instagram_Total_Engagements_Paid_Spend',
+#                  'SocialEng_Twitter_Total_Engagements_Paid_Spend',
+#                  'SocialEng_LinkedIn_Total_Engagements_Paid_Spend',
+#                  'SocialEng_TikTok_Total_Engagements_Paid_Spend',
+#                  'Preference_Paid_Spend',
+#                  'Net_Trust_lag181d_Paid_Spend', 
+#                  'NPS_Paid_Spend'
+# )
+
+# paid_media_spends = c('SEM_Google_Spend',
+#                       'Preload_IronSource_Aura_Spend',
+#                       'Programmatic_Bidease_Spend',
+#                       'Preload_Digital_Turbine_Spend',
+#                       'Programmatic_Tapjoy_Spend',
+#                       'SEM_Apple_Search_Ads_Spend',
+#                       'Programmatic_LiftOff_Spend',
+#                       'Programmatic_IronSource_Sonic_Spend',
+#                       'Programmatic_Persona.ly_Spend',
+#                       'Twitter_TikTok_Combined_Spend',
+#                       'Brand_Spend',
+#                       'Influencer_Spend')
+
+# paid_media_vars = c('SEM_Google_Spend',
+#                     'Preload_IronSource_Aura_Spend',
+#                     'Programmatic_Bidease_Spend',
+#                     'Preload_Digital_Turbine_Spend',
+#                     'Programmatic_Tapjoy_Spend',
+#                     'SEM_Apple_Search_Ads_Spend',
+#                     'Programmatic_LiftOff_Spend',
+#                     'Programmatic_IronSource_Sonic_Spend',
+#                     'Programmatic_Persona.ly_Spend',
+#                     'Twitter_TikTok_Combined_Spend',
+#                     'Brand_Spend',
+#                     'Influencer_Spend')
+
+# organic_vars = c('OrganicSearch_Google_Clicks',
+#                  'SocialEng_Twitter_Total_Engagements',
+#                  'SocialEng_Facebook_Total_Engagements',
+#                  'SocialEng_LinkedIn_Total_Engagements',
+#                  'SocialEng_TikTok_Total_Engagements',
+#                  'SocialEng_YouTube_Total_Engagements',
+#                  'SocialEng_Instagram_Total_Engagements'
+# )
+
 InputCollect <- robyn_inputs(
   dt_input = data,
   dt_holidays = dt_prophet_holidays,
@@ -38,123 +393,13 @@ InputCollect <- robyn_inputs(
   dep_var_type = "conversion", # "revenue" (ROI) or "conversion" (CPA)
   prophet_vars = c("trend", "season", "holiday"), # "trend","season", "weekday" & "holiday"
   prophet_country = "US",
-  context_vars = c('Preference',
-                   'USWeather.Impact.Rating',
-                   #'Positive_impact_on_community',
-                   #'Net.Trust',
-                   'NPS',
-                   #'Preference_lag90d'
-                   #'Net.Trust_lag90d',
-                   #'NPS_lag90d',
-                   #'Preference_lag181d'
-                   'Net.Trust_lag181d',
-                   #'NPS_lag181d',
-                   #'Preference_lag270d'
-                   #'Net.Trust_lag270d',
-                   #'NPS_lag270d',
-                   #'Preference_lag365d'
-                   #'Net.Trust_lag365d',
-                   #'NPS_lag365d',    
-                   #'EventsCamp.Vend_Campaign_Flag',
-                   #'Visits_Critical_Event_Flag',
-                   'OrganicSearch_Google_Clicks_Paid_Spend',
-                   'SocialEng_Facebook_Total_Engagements_Paid_Spend',
-                   'SocialEng_YouTube_Total_Engagements_Paid_Spend',
-                   'SocialEng_Instagram_Total_Engagements_Paid_Spend',
-                   'SocialEng_Twitter_Total_Engagements_Paid_Spend',
-                   'SocialEng_LinkedIn_Total_Engagements_Paid_Spend',
-                   'SocialEng_TikTok_Total_Engagements_Paid_Spend',
-                   #SocialEng_Facebook_Estimated_Clicks_Paid_Spend,
-                   #SocialEng_YouTube_Estimated_Clicks_Paid_Spend,
-                   #SocialEng_Instagram_Estimated_Clicks_Paid_Spend,
-                   #SocialEng_Twitter_Estimated_Clicks_Paid_Spend,
-                   #SocialEng_LinkedIn_Estimated_Clicks_Paid_Spend,
-                   #SocialEng_TikTok_Estimated_Clicks_Paid_Spend,
-                   #SocialEng_Facebook_Impressions_Paid_Spend,
-                   #SocialEng_YouTube_Impressions_Paid_Spend,
-                   #SocialEng_Instagram_Impressions_Paid_Spend,
-                   #SocialEng_Twitter_Impressions_Paid_Spend,
-                   #SocialEng_LinkedIn_Impressions_Paid_Spend,
-                   #SocialEng_TikTok_Impressions_Paid_Spend,
-                   #'Preference_Paid_Spend',
-                   #'Net_Trust_Paid_Spend',
-                   #'NPS_Paid_Spend',
-                   #'Preference_lag90d_Paid_Spend',
-                   #'Net_Trust_lag90d_Paid_Spend',
-                   #'NPS_lag90d_Paid_Spend',
-                   #'Preference_lag181d_Paid_Spend',
-                   #'Net_Trust_lag181d_Paid_Spend',
-                   #'NPS_lag181d_Paid_Spend',
-                   #'Preference_lag273d_Paid_Spend',
-                   #'Net_Trust_lag273d_Paid_Spend',
-                   #'NPS_lag273d_Paid_Spend',  
-                   #'Preference_lag365d_Paid_Spend',
-                   #'Net_Trust_lag365d_Paid_Spend',
-                   #'NPS_lag365d_Paid_Spend',   
-                   
-  ),
-  paid_media_spends = c('SEM_Google_Spend',
-                        'Preload_IronSource_Aura_Spend',
-                        'Programmatic_Bidease_Spend',
-                        'Preload_Digital_Turbine_Spend',
-                        'Programmatic_Tapjoy_Spend',
-                        'SEM_Apple_Search_Ads_Spend',
-                        'Programmatic_LiftOff_Spend',
-                        'Programmatic_IronSource_Sonic_Spend',
-                        'Programmatic_Persona.ly_Spend',
-                        'Twitter_TikTok_Combined_Spend',
-                        'Brand_Spend',
-                        'Influencer_Spend'),
-  paid_media_vars = c('SEM_Google_Spend',
-                      'Preload_IronSource_Aura_Spend',
-                      'Programmatic_Bidease_Spend',
-                      'Preload_Digital_Turbine_Spend',
-                      'Programmatic_Tapjoy_Spend',
-                      'SEM_Apple_Search_Ads_Spend',
-                      'Programmatic_LiftOff_Spend',
-                      'Programmatic_IronSource_Sonic_Spend',
-                      'Programmatic_Persona.ly_Spend',
-                      'Twitter_TikTok_Combined_Spend',
-                      'Brand_Spend',
-                      'Influencer_Spend',
-                      #'SEM_Google_Impressions',
-                      #'Preload_IronSource_Aura_impressions',
-                      #'Programmatic_Bidease_Spend',
-                      #'Preload_Digital_Turbine_launches',
-                      #'Programmatic_Tapjoy_Clicks',
-                      #'SEM_Apple_Search_Ads_Impressions',
-                      #'Programmatic_LiftOff_Impressions',
-                      #'Programmatic_IronSource_Sonic_Impressions',
-                      #'Programmatic_Persona.ly_Clicks',
-                      #'Twitter_TikTok_Combined_Impressions',
-                      #'Influencer_Daily_Impressions',
-                      #'Brand_Impressions'
-                      
-                      
-  ), # mandatory.
+  context_vars = context_vars,
+  paid_media_spends = paid_media_spends,
+  paid_media_vars = paid_media_vars, # mandatory.
   # paid_media_vars must have same order as paid_media_spends. Use media exposure metrics like
   # impressions, GRP etc. If not applicable, use spend instead.
 
-  organic_vars = c(    'OrganicSearch_Google_Clicks',
-                       'SocialEng_Twitter_Total_Engagements',
-                       'SocialEng_Facebook_Total_Engagements',
-                       'SocialEng_LinkedIn_Total_Engagements',
-                       'SocialEng_TikTok_Total_Engagements',
-                       'SocialEng_YouTube_Total_Engagements',
-                       'SocialEng_Instagram_Total_Engagements',
-                       #SocialEng_Facebook_Estimated_Clicks,
-                       #SocialEng_YouTube_Estimated_Clicks,
-                       #SocialEng_Instagram_Estimated_Clicks,
-                       #SocialEng_Twitter_Estimated_Clicks,
-                       #SocialEng_LinkedIn_Estimated_Clicks,
-                       #SocialEng_TikTok_Estimated_Clicks,
-                       #SocialEng_Facebook_Impressions,
-                       #SocialEng_YouTube_Impressions,
-                       #SocialEng_Instagram_Impressions,
-                       #SocialEng_Twitter_Impressions,
-                       #SocialEng_LinkedIn_Impressions,
-                       #SocialEng_TikTok_Impressions
-  ),                       
+  organic_vars = organic_vars,                       
   # factor_vars = c("events"), # force variables in context_vars or organic_vars to be categorical
   window_start = min(data$Date),#"2021-09-01", #min(data$Date),
   window_end = max(data$Date),
